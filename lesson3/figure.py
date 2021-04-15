@@ -1,31 +1,40 @@
-import math
+PI = 3.14
+# сознательно не хочу импортить math ради 'pi'
 
 
 class Figure:
+    area = 0
 
-    def error_func(self, name):
-        print(f"Passed incorrect params for {self.name}")
+    def __init__(self, name, angles):
+        self.name = name
+        self.angles = angles
 
 
 class Triangle(Figure):
-    name = 'triangle'
     angles = 3
+    name = 'triangle'
     perimeter = 0
     area = 0
 
-    def triangle_area(self, base, height):
-        self.area = 0.5 * base * height
-        if self.area > 0:
-            print(f'{self.name} area is: {self.area}')
+    def __init__(self, name, angles):
+        if self.name == name and self.angles == angles:
+            super().__init__(name, angles)
         else:
-            self.error_func(self.name)
+            raise NameError(f'Passed params: {name} {angles}, expected: {self.name} {self.angles}')
 
-    def triangle_perimeter(self, a, b, c):
-        self.perimeter = float(a + b + c)
-        if a > 0 and b > 0 and c > 0:
-            print(f'{self.name} perimeter is: {self.perimeter}')
-        else:
-            self.error_func(self.name)
+    def get_area(self, base, height):
+        self.area = 0.5 * base * height
+        return self.area
+
+    def get_perimeter(self, a, b, c):
+        self.perimeter = a + b + c
+        return self.perimeter
+
+    def get_name(self):
+        return self.name
+
+    def get_angles(self):
+        return self.angles
 
 
 class Rectangle(Figure):
@@ -34,69 +43,81 @@ class Rectangle(Figure):
     perimeter = 0
     area = 0
 
-    def rectangle_area(self, a, b):
-        self.area = float(a * b)
-        if self.area:
-            print(f"{self.name} area is: {self.area}")
+    def __init__(self, name, angles):
+        if self.name == name and self.angles == angles:
+            super().__init__(name, angles)
         else:
-            self.error_func(self.name)
+            raise NameError(f'Passed params: {name} {angles}, expected: {self.name} {self.angles}')
 
-    def rectangle_perimeter(self, a, b):
-        if a and b:
-            self.perimeter = float((a + b) * 2)
-            print(f"{self.name} perimeter is: {self.perimeter}")
-        else:
-            self.error_func(self.name)
+    def get_area(self, a, b):
+        self.area = a * b
+        return self.area
+
+    def get_perimeter(self, a, b):
+        self.perimeter = (a + b) * 2
+        return self.perimeter
+
+    def get_name(self):
+        return self.name
+
+    def get_angles(self):
+        return self.angles
 
 
 class Square(Figure):
     angles = 4
     name = 'square'
-    __area = 0
-    __perimeter = 0
+    area = 0
+    perimeter = 0
 
-    def square_area(self, a):
-        if a:
-            self.__area = a * a
-            print(f"{self.name} area is: {self.__area}")
+    def __init__(self, name, angles):
+        if self.name == name and self.angles == angles:
+            super().__init__(name, angles)
         else:
-            self.error_func(self.name)
+            raise NameError(f'Passed params: {name} {angles}, expected: {self.name} {self.angles}')
 
-    def square_perimeter(self, a):
-        if a:
-            self.__perimeter = a * 4
-            print(f"{self.name} perimeter is: {self.__perimeter}")
-        else:
-            self.error_func(self.name)
+    def get_area(self, a):
+        self.area = a * a
+        return self.area
+
+    def get_perimeter(self, a):
+        self.perimeter = a * 4
+        return self.perimeter
+
+    def get_name(self):
+        return self.name
+
+    def get_angles(self):
+        return self.angles
 
 
 class Circle(Figure):
-    """
-    S = pi * r * r
-    P = pi * r * 2
-    """
+    """S = pi * r * r
+       P = pi * r * 2"""
     name = 'circle'
     angles = 0
-    __area = 0
-    __perimeter = 0
+    area = 0
+    perimeter = 0
 
-    def circle_area(self, r):
-        if r:
-            self.__area = math.pi * r * r
-            print(f"{self.name} area is: {self.__area}")
+    def __init__(self, name, angles):
+        if self.name == name and self.angles == angles:
+            super().__init__(name, angles)
         else:
-            self.error_func(self.name)
+            raise NameError(f'Passed params: {name} {angles}, expected: {self.name} {self.angles}')
 
-    def circle_perimeter(self, r):
-        if r:
-            self.__perimeter = math.pi * r * 2
-            print(f"{self.name} perimeter is: {self.__perimeter}")
-        else:
-            self.error_func(self.name)
+    def get_area(self, r):
+        self.area = PI * r * r
+        return self.area
 
+    def get_perimeter(self, r):
+        self.perimeter = PI * r * 2
+        return self.perimeter
 
-first_figure = Triangle()
-second_figure = Rectangle()
-f3 = Square()
-f4 = Circle()
-f4.circle_perimeter(-5)
+    def get_angles(self):
+        return self.angles
+
+    def get_name(self):
+        return self.name
+
+# метод add_area(figure) который должен принимать другую
+# геометрическую фигуру и возвращать сумму площадей этих фигур.

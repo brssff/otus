@@ -1,5 +1,4 @@
-PI = 3.14
-# сознательно не хочу импортить math ради 'pi'
+from math import pi as PI
 
 
 class Figure:
@@ -19,7 +18,7 @@ class Triangle(Figure):
     angles = 3
     name = 'triangle'
 
-    def __init__(self, base, height, side_a, side_b, side_c):
+    def __init__(self, base, height, side_a=None, side_b=None, side_c=None):
         self.base = base
         self.height = height
         self.side_a = side_a
@@ -71,14 +70,3 @@ class Circle(Figure):
 
     def get_perimeter(self):
         return PI * self.radius * 2
-
-
-# f2 = Square(2)
-# f3 = Rectangle(3, 5)
-# print(f3.get_name())
-# print(f3.get_angles())
-# print(f"Area: {f3.get_area()}  и {f2.get_area()}")
-# print(f'Perimeter: {f3.get_perimeter()} и {f2.get_perimeter()}')
-#
-# #print(f'result add_area: {f2.add_area(f1)}')
-

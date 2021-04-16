@@ -1,17 +1,15 @@
 import pytest
-from lesson3.figure import *
+from lesson3.figure import Triangle, Rectangle, Square, Circle, PI
 
 
 class TestTriangle:
-    figure = Triangle('triangle', 3)
+    figure = Triangle(base=3, height=5, side_a=5, side_b=7, side_c=2)
 
-    @pytest.mark.parametrize("base, height, ex_result", [(5, 3, 7.5), (10, 99, 495.0), (0, 7, False)])
-    def test_triangle_area(self, base, height, ex_result):
-        assert self.figure.get_area(base, height) == ex_result
+    def test_triangle_area(self):
+        assert self.figure.get_area() == 7.5
 
-    @pytest.mark.parametrize("a, b, c", [(5, 7, 2), (0.5, 0.99, 2)])
-    def test_triangle_perimeter(self, a, b, c):
-        assert self.figure.get_perimeter(a, b, c) == a + b + c
+    def test_triangle_perimeter(self):
+        assert self.figure.get_perimeter() == 14
 
     def test_get_figure_name(self):
         assert self.figure.get_name() == 'triangle'
@@ -21,13 +19,13 @@ class TestTriangle:
 
 
 class TestRectangle:
-    figure = Rectangle('rectangle', 4)
+    figure = Rectangle(side_a=5, side_b=9)
 
     def test_rectangle_area(self):
-        assert self.figure.get_area(3, 1.5) == 4.5
+        assert self.figure.get_area() == 45
 
     def test_rectangle_perimeter(self):
-        assert self.figure.get_perimeter(3, 2) == 10
+        assert self.figure.get_perimeter() == 28
 
     def test_get_figure_name(self):
         assert self.figure.get_name() == 'rectangle'
@@ -37,13 +35,13 @@ class TestRectangle:
 
 
 class TestSquare:
-    figure = Square('square', 4)
+    figure = Square(side_a=3)
 
     def test_square_area(self):
-        assert self.figure.get_area(5) == 25
+        assert self.figure.get_area() == 9
 
     def test_square_perimeter(self):
-        assert self.figure.get_perimeter(0.5) == 2
+        assert self.figure.get_perimeter() == 12
 
     def test_get_figure_name(self):
         assert self.figure.get_name() == 'square'
@@ -53,17 +51,18 @@ class TestSquare:
 
 
 class TestCircle:
-    figure = Circle('circle', 0)
+    @pytest.mark.parametrize("value, ex_result", [(3, PI * 3 * 3),(5, PI * 5 * 5)])
+    def test_circle_area(self, value, ex_result):
+        figure = Circle(value)
+        assert figure.get_area() == ex_result
 
-    def test_circle_area(self):
-        assert self.figure.get_area(3) == PI * 3 * 3
-
-    @pytest.mark.parametrize("r, expected", [(3.5, 3.5 * PI * 2), (0, 0)])
-    def test_circle_perimeter(self, r, expected):
-        assert self.figure.get_perimeter(r) == expected
+    @pytest.mark.parametrize("value, ex_result", [(3.5, 3.5 * PI * 2), (0, 0)])
+    def test_circle_perimeter(self, value, ex_result):
+        figure = Circle(value)
+        assert figure.get_perimeter() == ex_result
 
     def test_get_figure_name(self):
-        assert self.figure.get_name() == 'circle'
+        assert Circle.name == 'circle'
 
     def test_get_figure_angles(self):
-        assert self.figure.get_angles() == 0
+        assert Circle.angles == 0

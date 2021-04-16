@@ -3,92 +3,58 @@ PI = 3.14
 
 
 class Figure:
-    area = 0
 
     def __init__(self, name, angles):
         self.name = name
         self.angles = angles
 
-
-class Triangle(Figure):
-    angles = 3
-    name = 'triangle'
-    perimeter = 0
-    area = 0
-
-    def __init__(self, name, angles):
-        if self.name == name and self.angles == angles:
-            super().__init__(name, angles)
-        else:
-            raise NameError(f'Passed params: {name} {angles}, expected: {self.name} {self.angles}')
-
-    def get_area(self, base, height):
-        self.area = 0.5 * base * height
-        return self.area
-
-    def get_perimeter(self, a, b, c):
-        self.perimeter = a + b + c
-        return self.perimeter
-
     def get_name(self):
         return self.name
 
     def get_angles(self):
         return self.angles
+
+
+class Triangle(Figure):
+    angles = 3
+    name = 'triangle'
+
+    def __init__(self, base, height, side_a, side_b, side_c):
+        self.base = base
+        self.height = height
+        self.side_a = side_a
+        self.side_b = side_b
+        self.side_c = side_c
+
+    def get_area(self):
+        return 0.5 * self.base * self.height
+
+    def get_perimeter(self):
+        return self.side_a + self.side_b + self.side_c
 
 
 class Rectangle(Figure):
     name = 'rectangle'
     angles = 4
-    perimeter = 0
-    area = 0
 
-    def __init__(self, name, angles):
-        if self.name == name and self.angles == angles:
-            super().__init__(name, angles)
+    def __init__(self, side_a, side_b=None):
+        # если передана только одна сторона, то это квадрат, иначе - прямоугольник
+        if not side_b:
+            self.side_a = side_a
+            self.side_b = side_a
         else:
-            raise NameError(f'Passed params: {name} {angles}, expected: {self.name} {self.angles}')
+            self.side_a = side_a
+            self.side_b = side_b
 
-    def get_area(self, a, b):
-        self.area = a * b
-        return self.area
+    def get_area(self):
+        return self.side_a * self.side_b
 
-    def get_perimeter(self, a, b):
-        self.perimeter = (a + b) * 2
-        return self.perimeter
-
-    def get_name(self):
-        return self.name
-
-    def get_angles(self):
-        return self.angles
+    def get_perimeter(self):
+        return (self.side_a + self.side_b) * 2
 
 
-class Square(Figure):
-    angles = 4
+class Square(Rectangle):
     name = 'square'
-    area = 0
-    perimeter = 0
-
-    def __init__(self, name, angles):
-        if self.name == name and self.angles == angles:
-            super().__init__(name, angles)
-        else:
-            raise NameError(f'Passed params: {name} {angles}, expected: {self.name} {self.angles}')
-
-    def get_area(self, a):
-        self.area = a * a
-        return self.area
-
-    def get_perimeter(self, a):
-        self.perimeter = a * 4
-        return self.perimeter
-
-    def get_name(self):
-        return self.name
-
-    def get_angles(self):
-        return self.angles
 
 
 class Circle(Figure):
@@ -96,28 +62,23 @@ class Circle(Figure):
        P = pi * r * 2"""
     name = 'circle'
     angles = 0
-    area = 0
-    perimeter = 0
 
-    def __init__(self, name, angles):
-        if self.name == name and self.angles == angles:
-            super().__init__(name, angles)
-        else:
-            raise NameError(f'Passed params: {name} {angles}, expected: {self.name} {self.angles}')
+    def __init__(self, radius):
+        self.radius = radius
 
-    def get_area(self, r):
-        self.area = PI * r * r
-        return self.area
+    def get_area(self):
+        return self.radius * self.radius * PI
 
-    def get_perimeter(self, r):
-        self.perimeter = PI * r * 2
-        return self.perimeter
+    def get_perimeter(self):
+        return PI * self.radius * 2
 
-    def get_angles(self):
-        return self.angles
 
-    def get_name(self):
-        return self.name
+# f2 = Square(2)
+# f3 = Rectangle(3, 5)
+# print(f3.get_name())
+# print(f3.get_angles())
+# print(f"Area: {f3.get_area()}  и {f2.get_area()}")
+# print(f'Perimeter: {f3.get_perimeter()} и {f2.get_perimeter()}')
+#
+# #print(f'result add_area: {f2.add_area(f1)}')
 
-# метод add_area(figure) который должен принимать другую
-# геометрическую фигуру и возвращать сумму площадей этих фигур.

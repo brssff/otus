@@ -1,11 +1,11 @@
-from math import pi as PI
+from math import pi
 
 
 class Figure:
 
-    def __init__(self, name, angles):
-        self.name = name
-        self.angles = angles
+    name = None
+    angles = None
+    area = 0
 
     def get_name(self):
         return self.name
@@ -26,10 +26,17 @@ class Triangle(Figure):
         self.side_c = side_c
 
     def get_area(self):
-        return 0.5 * self.base * self.height
+        self.area = 0.5 * self.base * self.height
+        return self.area
 
     def get_perimeter(self):
         return self.side_a + self.side_b + self.side_c
+
+    def add_area(self, figure):
+        if isinstance(figure, Figure):
+            return figure.area + self.area
+        else:
+            return TypeError
 
 
 class Rectangle(Figure):
@@ -46,10 +53,17 @@ class Rectangle(Figure):
             self.side_b = side_b
 
     def get_area(self):
-        return self.side_a * self.side_b
+        self.area = self.side_a * self.side_b
+        return self.area
 
     def get_perimeter(self):
         return (self.side_a + self.side_b) * 2
+
+    def add_area(self, figure):
+        if isinstance(figure, Figure):
+            return figure.area + self.area
+        else:
+            return TypeError
 
 
 class Square(Rectangle):
@@ -66,7 +80,14 @@ class Circle(Figure):
         self.radius = radius
 
     def get_area(self):
-        return self.radius * self.radius * PI
+        self.area = self.radius * self.radius * pi
+        return self.area
 
     def get_perimeter(self):
-        return PI * self.radius * 2
+        return pi * self.radius * 2
+
+    def add_area(self, figure):
+        if isinstance(figure, Figure):
+            return figure.area + self.area
+        else:
+            return TypeError

@@ -1,5 +1,4 @@
-import pytest
-from lesson3.figure import Triangle, Rectangle, Square, Circle, PI
+from lesson3.figure import Triangle, Rectangle, Square, Circle, pi
 
 
 class TestTriangle:
@@ -17,6 +16,14 @@ class TestTriangle:
     def test_get_figure_angles(self):
         assert self.figure.get_angles() == 3
 
+    def test_add_area(self):
+        # создаю инстанс прямоугольника чтобы получив его площадь, передать ее в add_area
+        rect = Rectangle(5, 4)
+        rect.get_area()
+        # Triangle.area = 7.5, Rectangle.area = 20
+        assert self.figure.add_area(rect) == 27.5
+        assert self.figure.add_area('Not Figure instance') == TypeError
+
 
 class TestRectangle:
     figure = Rectangle(side_a=5, side_b=9)
@@ -32,6 +39,14 @@ class TestRectangle:
 
     def test_get_figure_angles(self):
         assert self.figure.get_angles() == 4
+
+    def test_add_area(self):
+        # создаю инстанс круга чтобы получив его площадь, передать ее в add_area
+        circle = Circle(5)
+        circle.get_area()
+        # Circle.area = 78.53981633974483, Rectangle.area = 45
+        assert self.figure.add_area(circle) == 123.53981633974483
+        assert self.figure.add_area('Not Figure instance') == TypeError
 
 
 class TestSquare:
@@ -49,20 +64,34 @@ class TestSquare:
     def test_get_figure_angles(self):
         assert self.figure.get_angles() == 4
 
+    def test_add_area(self):
+        # создаю инстанс треугольника чтобы получив его площадь, передать ее в add_area
+        triangle = Triangle(3, 5)
+        triangle.get_area()
+        # Square.area = 9, Triangle.area = 7.5
+        assert self.figure.add_area(triangle) == 16.5
+        assert self.figure.add_area('Not Figure instance') == TypeError
+
 
 class TestCircle:
-    @pytest.mark.parametrize("value, ex_result", [(3, PI * 3 * 3),(5, PI * 5 * 5)])
-    def test_circle_area(self, value, ex_result):
-        figure = Circle(value)
-        assert figure.get_area() == ex_result
+    figure = Circle(4)
 
-    @pytest.mark.parametrize("value, ex_result", [(3.5, 3.5 * PI * 2), (0, 0)])
-    def test_circle_perimeter(self, value, ex_result):
-        figure = Circle(value)
-        assert figure.get_perimeter() == ex_result
+    def test_circle_area(self):
+        assert self.figure.get_area() == 50.26548245743669
+
+    def test_circle_perimeter(self):
+        assert self.figure.get_perimeter() == 4 * pi * 2
 
     def test_get_figure_name(self):
         assert Circle.name == 'circle'
 
     def test_get_figure_angles(self):
         assert Circle.angles == 0
+
+    def test_add_area(self):
+        # создаю инстанс квадрата чтобы получив его площадь, передать ее в add_area
+        square = Square(3)
+        square.get_area()
+        # Square.area = 9, Circle.area = 50.26548245743669
+        assert self.figure.add_area(square) == square.area + self.figure.area
+        assert self.figure.add_area('Not Figure instance') == TypeError

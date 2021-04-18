@@ -29,6 +29,3 @@ class TestList:
         temp = self.test_list
         temp.insert(2, value)
         assert temp[2] == value
-
-
-

@@ -31,3 +31,13 @@ def data_generator():
 def random_exist_userid():
     r = requests.get('https://jsonplaceholder.typicode.com/users')
     return random.randrange(0, (len(r.json())), 1)
+
+
+# считывает id всех пивных (они вроде как меняются каждый день =\) и возвращает строку для конкатенации в URLе
+@pytest.fixture()
+def random_brewery_id():
+    r = requests.get('https://api.openbrewerydb.org/breweries')
+    brew_ids = []
+    for i in range(len(r.json())):
+        brew_ids.append(r.json()[i]['id'])
+    return str(random.choice(brew_ids))

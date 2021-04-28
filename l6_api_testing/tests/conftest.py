@@ -41,3 +41,18 @@ def random_brewery_id():
     for i in range(len(r.json())):
         brew_ids.append(r.json()[i]['id'])
     return str(random.choice(brew_ids))
+
+
+def pytest_addoption(parser):
+    parser.addoption("--url", action="store", default="https://ya.ru/", help="type your URL")
+    parser.addoption("--status_code", default='200', help="type expected status code")
+
+
+@pytest.fixture
+def passed_url(request):
+    return request.config.getoption("url")
+
+
+@pytest.fixture
+def passed_status_code(request):
+    return int(request.config.getoption("status_code"))

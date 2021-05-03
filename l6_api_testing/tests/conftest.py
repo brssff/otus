@@ -45,7 +45,7 @@ def random_brewery_id():
 
 def pytest_addoption(parser):
     parser.addoption("--url", action="store", default="https://ya.ru/", help="type your URL")
-    parser.addoption("--status_code", default='200', help="type expected status code")
+    parser.addoption("--status_code", type=int, default='200', help="type expected status code")
 
 
 @pytest.fixture
@@ -55,4 +55,4 @@ def passed_url(request):
 
 @pytest.fixture
 def passed_status_code(request):
-    return int(request.config.getoption("status_code"))
+    return request.config.getoption("status_code")
